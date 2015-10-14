@@ -1,0 +1,65 @@
+{
+    "manifest_version": 2,
+    "name": "NES",
+    "version": "0.5.3.1",
+    "author": "anon",
+    "description": "Enhancements and Fixes",
+    "icons": {
+        "16": "./icon-16.png",
+        "32": "./icon-32.png",
+        "64": "./icon-64.png"
+    },
+    "browser_action": {
+        "default_icon": {
+            "16": "./icon-16.png",
+            "32": "./icon-32.png",
+            "64": "./icon-64.png"
+        },
+        "default_title": "NES",
+        "default_popup": "panel.html"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "http://tickets/tickets/viewticket.asp?id=*",
+                "http://tickets.ncdomain.netcarrier.com/tickets/viewticket.asp?id=*"
+            ],
+            "js": [
+                "publicCheckbox.js"
+            ]
+        },
+        {
+            "matches": [
+                "http://tickets/tickets/create.asp", 
+                "http://tickets.ncdomain.netcarrier.com/tickets/create.asp"
+            ],
+            "js": [
+                "companyName.js"
+            ]
+        },
+        {
+            "matches": [
+                "https://pbx1.ncpbxnccorp.com/reach/d*",
+                "http://pbx1.ncpbxnccorp.com/reach/d*"
+            ],
+            "js": [
+                "reach.js"
+            ]
+        }
+    ],
+    "background": {
+        "scripts": ["background.js"]
+    },
+    "permissions": [
+        "tabs",
+        "http://tickets/tickets/view.asp",
+        "http://pbx1.ncpbxnccorp.com/reach/login",
+        "https://pbx1.ncpbxnccorp.com/reach/login",
+        "http://netcarrier.qmax.netcarrier.net/cti/agents/*",
+        "storage"
+    ],
+    "options_ui": {
+        "page": "options.html",
+        "chrome_style": true
+    }
+}

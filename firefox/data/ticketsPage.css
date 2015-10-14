@@ -1,0 +1,102 @@
+.quick{
+    background-color: black;
+    display: inline-block;
+    height: 15px;
+	float: right;
+	margin-right: 1px;
+	margin-top: 1px;
+}
+
+#overlay {
+	position:fixed;
+	top: 50%;
+	left: 50%;
+	background-color: #EBEBEB;
+	border:5px solid #99CC66;
+	width:1100px;
+	height:700px;
+	margin-left:-550px;
+	margin-top:-350px;
+	box-shadow: 12px 0 15px -4px #000000, -12px 0 15px -4px#000000;
+	-moz-box-shadow: 12px 0 15px -4px #000000, -12px 0 15px -4px#000000;
+	-webkit-box-shadow: 12px 0 15px -4px #000000, -12px 0 15px -4px#000000;
+	z-index: 9002;
+	overflow: auto;
+}
+
+
+#exit {
+    position:fixed;
+    padding:0;
+    margin:0;
+
+    top:0;
+    left:0;
+
+    width: 100%;
+    height: 100%;
+    background:rgba(0,0,0,0.7);
+	z-index: 5000;
+}
+
+#ticketContent table:nth-child(1), #ticketContent table:nth-child(2){
+	background-color: #666666;
+}
+
+#ticketContent td, tr {
+	padding: 0px !important;
+}
+
+#ticketContent td {
+	padding: 3px !important;
+}
+
+#lastPost {
+	margin: 0px 5px 0px 5px;
+}
+
+#lastPost > tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(1) {
+	width: 200px;
+}
+
+#lastPost > tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(2) {
+	width: 450px;
+}
+
+#lastPost > tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(3) {
+	width: 450px;
+}
+
+.tdata {
+	background-color: #D4D4D4;
+}
+
+#ticketInfo{
+	margin: 35px 5px 20px 5px;
+}
+
+#ticketInfo td {
+	background-color: white;
+}
+
+#ticketInfo td:first-child {
+	background-color: #9C6;
+	width: 191px;
+}
+
+#ticketInfo td:nth-child(2) {
+	width: 950px;
+}
+
+#newUpdate {
+	margin-left: 5px !important;
+	width: 1073px !important;
+}
+
+.greenrow {
+	background-color: #9C6;
+}
+
+#newUpdate > tbody:nth-child(1) > tr:nth-child(2) > td:nth-child(1) > textarea:nth-child(1) {
+	height: 10em !important;
+}
