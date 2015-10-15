@@ -18,28 +18,24 @@
     "name": "alwaysPrivate",
       "title": "Always default to private ticket posts",
       "type": "bool",
-      "value": true,
-      "description": "Requires Firefox restart to take effect"
+      "value": true
   },
   {
     "name": "prepNOC",
       "title": "Makes sure ticket is properly tagged when escalating to NOC",
       "type": "bool",
-      "value": true,
-      "description": "Requires Firefox restart to take effect"
+      "value": true
   },
   {
     "name": "companyName",
       "title": "Default to \"Company Name\" rather than \"Customer ID\" when creating a new ticket",
       "type": "bool",
-      "value": true,
-      "description": "Requires Firefox restart to take effect"
+      "value": true
   },
   {
     "name": "acdKicker",
       "title": "Automatically requeue when released from ACD",
       "type": "bool",
-      "value": false,
-      "description": "Requires Firefox restart to take effect"
+      "value": false
   }]
 }
