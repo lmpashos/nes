@@ -464,6 +464,7 @@ if (!Array.forEach) { // mozilla already supports this
 }
 
 // generic enumeration
+/*
 Function.prototype.forEach = function(object, block, context) {
 	for (var key in object) {
 		if (typeof this.prototype[key] == "undefined") {
@@ -471,6 +472,7 @@ Function.prototype.forEach = function(object, block, context) {
 		}
 	}
 };
+*/
 
 // character enumeration
 String.forEach = function(string, block, context) {
@@ -485,7 +487,7 @@ var forEach = function(object, block, context) {
 		var resolve = Object; // default
 		if (object instanceof Function) {
 			// functions have a "length" property
-			resolve = Function;
+			//resolve = Function;
 		} else if (object.forEach instanceof Function) {
 			// the object implements a custom forEach method so use that
 			object.forEach(block, context);

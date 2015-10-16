@@ -1,7 +1,7 @@
 {
   "title": "NES",
   "name": "nes",
-  "version": "0.8.8",
+  "version": "0.8.9",
   "id": "nes@nc",
   "icon": "resource://nes-at-nc/data/icon-64.png",
   "description": "Enhancements and Fixes",
