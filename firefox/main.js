@@ -171,7 +171,7 @@ var imgurl = self.data.url("expand.png");
 var ticketsPage = require("sdk/page-mod");
 ticketsPage.PageMod({
   include: ["http://tickets/tickets/view.asp", "http://tickets.ncdomain.netcarrier.com/tickets/view.asp"],
-  contentScriptFile: [data.url("jquery-1.11.1.js"), data.url("jquery-ui.js"), data.url("ticketsPage.js")],
+  contentScriptFile: data.url("ticketsPage.js"),
   contentStyleFile: self.data.url("ticketsPage.css"),
   onAttach: function(worker) {
     worker.port.emit("imgurl", imgurl);
