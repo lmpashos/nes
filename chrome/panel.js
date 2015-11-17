@@ -87,6 +87,7 @@ function getSavedData(){
 		table[0].innerHTML = localStorage.getItem("tableSaved");
 		sorttable.makeSortable(table[0]);
 		document.getElementById("clickAtLoad").click();
+		getXTickets();
 	}
 	else{
 		getNewData()
@@ -106,7 +107,24 @@ function getNewData(){
 		    	chrome.tabs.remove(tab.id)
 		    	chrome.extension.onRequest.removeListener(update);
 		    	document.getElementById("clickAtLoad").click();
+		    	getXTickets();
 		    }
 		);
 	});
+}
+
+function getXTickets(){
+	var names = document.querySelectorAll("#ticketCount > table > tbody > tr > td.name");
+	for (var i = 0; i < names.length; i++) {
+		//console.log(names[i])
+		names[i].addEventListener("click", function() {
+			var name = this.innerHTML;
+			name = name.replace(" ", ".").toLowerCase().trim();
+			if (name == "dan.bartley")
+				name = "bartleyd&nbsp;";
+			else if (name == "dan.schneider")
+				name = "schneiderd&nbsp;";
+			chrome.extension.sendRequest({greeting: "getXTickets", name: name});
+		});
+	}
 }

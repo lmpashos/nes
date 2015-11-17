@@ -53,6 +53,35 @@ function retrieveLinks(name) {
 	});
 }
 
+chrome.extension.onRequest.addListener(
+    function update(request, sender) {
+   		if (request.greeting == "getXTickets"){
+   			openHisTickets(request.name)
+    	}
+    }
+);
+
+function openHisTickets(name) {
+	chrome.tabs.create({url: "http://tickets/tickets/view.asp", active: false}, function (tab) {
+	 	chrome.tabs.executeScript(tab.id, {file: "myTickets.js"}, function() {
+	 		chrome.tabs.sendRequest(tab.id, {greeting: "passingName", name: name});
+	 	});
+		chrome.extension.onRequest.addListener(
+		    function update(request, sender) {
+		    	if (request.greeting == "linksRetrieved") {
+			    	chrome.extension.onRequest.removeListener(update);
+			    	chrome.tabs.remove(tab.id);
+			    	for (var i = 0 ; i < request.links.length; i++) {
+			    		chrome.tabs.create({url: request.links[i], active: false});
+			    	}
+		    	}
+		    }
+		);
+	});
+}
+
+
+
 /*
 function login() {
 	var tabID;

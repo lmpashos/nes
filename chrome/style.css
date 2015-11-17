@@ -115,6 +115,25 @@ th a{
     padding-right: 10px;
 }
 
+tr.alt > td.name:hover{
+    color: white;
+    cursor: pointer;
+}
+
+tr.alt > td.name:active{
+    color: black;
+    cursor: pointer;
+}
+
+tr > td.name:hover{
+    color: #86C340;
+    cursor: pointer;
+}
+
+tr > td.name:active{
+    color: black;
+    cursor: pointer;
+}
 
 /*
 .page-wrap {
