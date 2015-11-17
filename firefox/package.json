@@ -1,9 +1,9 @@
 {
   "title": "NES",
   "name": "nes",
-  "version": "0.8.10",
-  "id": "nes@nc",
-  "icon": "resource://nes-at-nc/data/icon-64.png",
+  "version": "0.8.11",
+  "id": "nes1@nc",
+  "icon": "resource://nes1-at-nc/data/icon-64.png",
   "description": "Enhancements and Fixes",
   "main": "main.js",
   "author": "anon",

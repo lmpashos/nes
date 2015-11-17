@@ -292,10 +292,28 @@ function openMyTickets() {
         url: links[i],
         inBackground: true
       });
- 
     }
   });
 }
+
+
+panel.port.on("openHisTickets", function (name) {
+  var pageWorker = require("sdk/page-worker").Page({
+    contentURL: "http://tickets/tickets/view.asp",
+    contentScriptFile: data.url("myTickets.js"),
+    contentScriptOptions: {"name": name}
+  });
+  pageWorker.port.once("linksRetrieved", function (links){
+    pageWorker.destroy();
+    var tabs = require("sdk/tabs");
+    for (var i = 0; i < links.length; i++) {
+      tabs.open({
+        url: links[i],
+        inBackground: true
+      });
+    }
+  });
+});
 
 
 /*

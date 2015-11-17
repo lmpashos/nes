@@ -32,6 +32,20 @@ self.port.on("updatePanel", function (text){
 	table.innerHTML = text;
 	sorttable.makeSortable(table);
 
+	var names = document.querySelectorAll("#ticketCount > table > tbody > tr > td.name");
+	for (var i = 0; i < names.length; i++) {
+		//console.log(names[i])
+		names[i].addEventListener("click", function() {
+			var name = this.innerHTML;
+			name = name.replace(" ", ".").toLowerCase().trim();
+			if (name == "dan.bartley")
+				name = "bartleyd&nbsp;";
+			else if (name == "dan.schneider")
+				name = "schneiderd&nbsp;";
+			self.port.emit("openHisTickets", name);
+		});
+	}
+
 	if (document.getElementById("cumberbutton").checked == true) {
 		var names = document.getElementsByClassName("name");
 		var numNames = names.length;
@@ -50,13 +64,7 @@ for (var i = 0; i < links.length; i++) {
 	});
 }
 
-document.addEventListener("keyup", emailJustin, false);
 
-function emailJustin(e) {
-    if (e.keyCode == "74") {
-        document.location = "mailto:justin.wysong@corp.netcarrier.com&Subject=u%20r%20gay&Body=Sent%20from%20my%20iPhone";
-    }
-}
 
 
 // genetates a fake Benedict Cumberbatch name
