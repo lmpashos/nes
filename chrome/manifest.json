@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "NES",
-    "version": "0.5.5",
+    "version": "0.5.6",
     "author": "anon",
     "description": "Enhancements and Fixes",
     "icons": {
@@ -26,6 +26,9 @@
             ],
             "js": [
                 "publicCheckbox.js"
+            ],
+            "css": [
+                "publicCheckbox.css"
             ]
         },
         {

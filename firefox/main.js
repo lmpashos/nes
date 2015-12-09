@@ -112,6 +112,7 @@ function initNotPublic() {
   notPublic = require("sdk/page-mod").PageMod({
     include: ["http://tickets/tickets/viewticket.asp?id=*", "http://tickets.ncdomain.netcarrier.com/tickets/viewticket.asp?id=*"],
     contentScriptFile: data.url("publicCheckbox.js"),
+    contentStyleFile: self.data.url("publicCheckbox.css"),
     contentScriptOptions: {
       alwaysPrivate: alwaysPrivate,
       prepNOC: prepNOC

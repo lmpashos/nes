@@ -1,0 +1,14 @@
+.resizableDiv{
+    border: 2px solid #666666;
+    width: 33%;
+    resize: both;
+    overflow: hidden;	
+}
+
+.resizableAnchor{
+	width: 100%;
+}
+
+.resizableImg{
+	width: 100%;
+}
