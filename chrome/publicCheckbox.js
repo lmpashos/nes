@@ -62,6 +62,9 @@ for (var x = 0; x < events.length; x++) {
 		if (post[y].href.toLowerCase().endsWith(".png") || post[y].href.toLowerCase().endsWith(".jpg") || post[y].href.toLowerCase().endsWith(".jpeg") || post[y].href.toLowerCase().endsWith(".gif")) {
 			links.push(post[y]);
 		}
+		else if (post[y].href.toLowerCase().startsWith("http://mycacti.netcarrier.net/cacti/graph_image.php")) {
+			links.push(post[y]);
+		}
 	}
 }
 
