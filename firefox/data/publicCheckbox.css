@@ -1,3 +1,4 @@
+/*
 .resizableDiv{
     border: 2px solid #666666;
     width: 33%;
@@ -8,7 +9,8 @@
 .resizableAnchor{
 	width: 100%;
 }
+*/
 
 .resizableImg{
-	width: 100%;
+	width: 33%;
 }
