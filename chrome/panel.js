@@ -48,6 +48,7 @@ document.addEventListener("DOMContentLoaded", function(){
 		chrome.extension.sendRequest({greeting: "login"});
 	});
 
+	document.addEventListener("keyup", keyPressed, false);
 });
 
 
@@ -127,4 +128,10 @@ function getXTickets(){
 			chrome.extension.sendRequest({greeting: "getXTickets", name: name});
 		});
 	}
+}
+
+function keyPressed(e) {
+    if (e.keyCode == "83") {
+    	chrome.extension.sendRequest({greeting: "seanSearch"});
+    }
 }

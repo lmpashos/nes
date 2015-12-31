@@ -64,7 +64,13 @@ for (var i = 0; i < links.length; i++) {
 	});
 }
 
+document.addEventListener("keyup", keyPressed, false);
 
+function keyPressed(e) {
+    if (e.keyCode == "83") {
+    	self.port.emit("seanSearch");
+    }
+}
 
 
 // genetates a fake Benedict Cumberbatch name

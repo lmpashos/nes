@@ -82,6 +82,45 @@ function openHisTickets(name) {
 
 
 
+chrome.extension.onRequest.addListener(
+    function update(request, sender) {
+   		if (request.greeting == "seanSearch"){
+   			seanSearchNameGetter();
+    	}
+    }
+);
+
+function seanSearchNameGetter() {
+	chrome.tabs.create({url: "http://tickets/", active: false}, function (tab) {
+	 	chrome.tabs.executeScript(tab.id, {file: "getUser.js"})
+		chrome.extension.onRequest.addListener(
+		    function update(request, sender) {
+		    	if (request.greeting == "userGotten") {
+			    	chrome.extension.onRequest.removeListener(update);
+			    	chrome.tabs.remove(tab.id);
+			    	seanSearch(request.name);
+		    	}
+		    }
+		);
+	});
+}
+
+function seanSearch(name) {
+	chrome.tabs.create({url: "http://tickets/tickets/search.asp", active: true}, function (tab) {
+	 	chrome.tabs.executeScript(tab.id, {file: "seanSearch.js"}, function() {
+	 		chrome.tabs.sendRequest(tab.id, {greeting: "seanSearchName", name: name});
+	 	});
+		chrome.extension.onRequest.addListener(
+		    function update(request, sender) {
+		    	if (request.greeting == "seanSearchComplete") {
+			    	chrome.extension.onRequest.removeListener(update);
+		    	}
+		    }
+		);
+	});
+}
+
+
 /*
 function login() {
 	var tabID;

@@ -317,6 +317,40 @@ panel.port.on("openHisTickets", function (name) {
 });
 
 
+
+panel.port.on("seanSearch", function () {
+  var pageWorker = require("sdk/page-worker").Page({
+    contentURL: "http://tickets/",
+    contentScriptFile: data.url("getUser.js")
+  });
+  pageWorker.port.once("userGot", function (name) {
+    pageWorker.destroy();
+    userName = name;
+    seanSearchCaller();
+  });
+});
+
+var searchTicketsTab = require("sdk/tabs")
+function seanSearchCaller() {
+  searchTicketsTab.open({
+    url: "http://tickets/tickets/search.asp",
+    inBackground: false
+  });
+  searchTicketsTab.on("ready", seanSearch);
+}
+
+function seanSearch(tab) {
+  searchSearchWorker = tab.attach({
+    contentScriptFile: data.url("seanSearch.js"),
+    contentScriptOptions: {"name": userName}
+  });
+  searchSearchWorker.port.on("complete", function() {
+    searchTicketsTab.removeListener("ready", seanSearch);
+    searchSearchWorker.destroy();
+  });
+}
+
+
 /*
   {
       "name": "username",
