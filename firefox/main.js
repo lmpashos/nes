@@ -121,7 +121,17 @@ function initNotPublic() {
       workers.push(worker);
       worker.on('detach', function() {
         detachWorker(this, workers);
-      })
+      });
+      worker.port.once("getEscalationTimer", function (link) {
+        var getEscalationTimer = require("sdk/page-worker").Page({
+          contentScriptFile: data.url("getEscalationTimer.js"),
+          contentScriptOptions: {ticketLink: link},
+          contentURL: "http://tickets/tickets/view.asp"
+        });
+        getEscalationTimer.port.once("timerRetrieved1", function (timer) {
+          worker.port.emit("timerRetrieved", timer);
+        });
+      });
     }
   });
 }
