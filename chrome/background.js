@@ -80,7 +80,39 @@ function openHisTickets(name) {
 	});
 }
 
+var escalationData;
 
+chrome.extension.onRequest.addListener(
+	function update(request, sender, sendResponse) {
+		if (request.greeting == "getEscalationTimer") {
+			sendResponse({timer: getEscalationTimer(request.ticketURL)});
+		}
+	}
+);
+
+function getEscalationTimer(ticketURL) {
+	if (escalationData != undefined) {
+		var timer = escalationData[ticketURL];
+		if (timer != undefined) {
+			return timer;
+		}
+		else return null;
+	}
+	else return null;
+}
+
+chrome.extension.onRequest.addListener(
+    function getTimer(request, sender) {
+    	if (request.greeting == "timersRetrieved") {
+	    	updateEscalationData(request.escalationDataString);
+    	}
+    }
+)
+
+function updateEscalationData(data) {
+	localStorage.setItem("escalationData", data);
+	escalationData = JSON.parse(localStorage.getItem("escalationData"));
+}
 
 chrome.extension.onRequest.addListener(
     function update(request, sender) {

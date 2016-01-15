@@ -39,9 +39,7 @@ function makePrivate() {
 }
 
 function prepForNOC() {
-	//alert("noc enabled");
 	var noc = document.querySelector("#content > form > table > tbody > tr:nth-child(3) > td > select:nth-child(7)");
-	//console.log(noc.innerHTML)
 	if (noc.value != 2) {
 		noc.addEventListener("click", function(){
 			if (this.value == 2) {
@@ -54,6 +52,15 @@ function prepForNOC() {
 	}
 }
 
+// puts escalation timer in the ticket
+chrome.extension.sendRequest({greeting:"getEscalationTimer", ticketURL:window.location.href}, function (response) {
+	if (response.timer != null) {
+		document.querySelector("#content > table:nth-child(5) > tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(1)").innerHTML += "- Escalation Timer: " + response.timer;
+	}
+});
+
+
+// find all image links in ticket
 var events = document.querySelectorAll("#content > table:nth-child(5) > tbody:nth-child(1) > tr > td:nth-child(2)");
 var links = [];
 for (var x = 0; x < events.length; x++) {
@@ -68,6 +75,7 @@ for (var x = 0; x < events.length; x++) {
 	}
 }
 
+// set image links in image tags for in line viewing
 for (var x = 0; x < links.length; x++) {
 	//var div = document.createElement("div");
 	var anchor = document.createElement("a");
@@ -83,21 +91,6 @@ for (var x = 0; x < links.length; x++) {
 	links[x].parentNode.insertBefore(anchor, links[x]);
 	links[x].parentNode.removeChild(links[x]);
 }
-
-/*
-var resizableImgs = document.getElementsByClassName("resizableImg");
-for (var x = 0; x < resizableImgs.length; x++) {
-	//imageDivs[x].addEventListener("mouseup", resize)
-}
-
-
-function resize(){
-	var image1 = this.firstChild;
-	var image = image1.firstChild;
-	this.style.width = image.clientWidth;
-	this.style.height = image.clientHeight;
-}
-*/
 
 
 var imageData = Array();

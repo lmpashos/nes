@@ -102,13 +102,15 @@ function getNewData(){
 	 	chrome.tabs.executeScript(tab.id, {file: "tickets.js"})
 		chrome.extension.onRequest.addListener(
 		    function update(request, sender) {
-		        table[0].innerHTML = request.table;
-		        sorttable.makeSortable(table[0]);
-		        localStorage.setItem("tableSaved", table[0].innerHTML)
-		    	chrome.tabs.remove(tab.id)
-		    	chrome.extension.onRequest.removeListener(update);
-		    	document.getElementById("clickAtLoad").click();
-		    	getXTickets();
+		    	if (request.greeting = "tableRetrieved") {
+			        table[0].innerHTML = request.table;
+			        sorttable.makeSortable(table[0]);
+			        localStorage.setItem("tableSaved", table[0].innerHTML)
+			    	chrome.tabs.remove(tab.id)
+			    	chrome.extension.onRequest.removeListener(update);
+			    	document.getElementById("clickAtLoad").click();
+			    	getXTickets();
+		    	}
 		    }
 		);
 	});

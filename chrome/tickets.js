@@ -10,8 +10,9 @@ getTicketCount();
 
 // grabs ticket counts from page and sends back to main
 function getTicketCount() {
-	var rows = document.querySelectorAll("div#content form table thead tr")
-	var tickets = []
+	var rows = document.querySelectorAll("div#content form table thead tr");
+	var tickets = [];
+	var escalationData = {};
 
 	for (var i = 1; i < rows.length; i++) {
 		var cells = rows[i].getElementsByTagName("td");
@@ -21,7 +22,14 @@ function getTicketCount() {
 			"priority": cells[2].innerHTML.trim()
 		}
 		tickets.push(ticket);
+
+		var url = cells[0].firstChild.href;
+		var timer = cells[10].innerHTML.replace(/(\r\n|\n|\r|\t)/gm,"").trim().split("<br>").pop();
+
+		escalationData[url] = timer
 	}
+
+	var escalationDataString = JSON.stringify(escalationData);
 
 	tickets.sort(function (a, b) {
 		if(a.name < b.name) return -1;
@@ -91,8 +99,10 @@ function getTicketCount() {
 	}
 
 	html += "<tfoot><tr id=\"total\">" + "<td class=\"name\">" + "TOTAL" + "</td>" + "<td>" + numTickets + "</td>" + "<td>" + majorTotal + "</td>" + "<td>" + modTotal + "</td>" + "<td>" + infoTotal + "</td>" + "<td>" + inCallCenterTotal + "</td>" + "</tr></tfoot>"
-	html += "</tbody>"
-	chrome.extension.sendRequest({table: html});
+	html += "</tbody>";
+	chrome.extension.sendRequest({greeting:"timersRetrieved", escalationDataString: escalationDataString});
+	chrome.extension.sendRequest({greeting:"tableRetrieved", table: html});
+
 }
 
 // formats name by removing dot and capitalizing first letters of first and last name
