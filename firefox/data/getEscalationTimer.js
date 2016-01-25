@@ -7,7 +7,9 @@ for (var i = 0; i < anchors.length; i++) {
 	}
 }
 
-var timer = anchor.parentElement.parentElement.children[10].innerHTML.replace(/(\r\n|\n|\r|\t)/gm,"").trim().split("<br>").pop();
+var timer = "Unavailable";
 
+if (anchor != undefined) 
+	timer = anchor.parentElement.parentElement.children[10].innerHTML.replace(/(\r\n|\n|\r|\t)/gm,"").trim().split("<br>").pop();
 
 self.port.emit("timerRetrieved1", timer);

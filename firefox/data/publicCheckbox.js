@@ -26,23 +26,23 @@ function makePrivate() {
 	}
 
 	var type = document.getElementById("subject");
-	var options = type.getElementsByTagName("*");
-
-	for (var i = 0; i < options.length; i++) {
-		options[i].addEventListener("click", function(){
-			checkBox.checked = false;
-		});
-	}
+	type.addEventListener("change", function(){
+		checkBox.checked = false;
+	});
 }
 
 function prepForNOC() {
-	var noc = document.querySelector("#content > form:nth-child(8) > table:nth-child(1) > tbody:nth-child(1) > tr:nth-child(3) > td:nth-child(1) > select:nth-child(7) > option:nth-child(2)");
-	noc.addEventListener("click", function(){
-		document.querySelector("#content > form:nth-child(8) > table:nth-child(1) > tbody:nth-child(1) > tr:nth-child(3) > td:nth-child(1) > select:nth-child(3) > option:nth-child(2)").selected = true;
-		if (document.querySelector("#content > form:nth-child(8) > table:nth-child(1) > tbody:nth-child(1) > tr:nth-child(3) > td:nth-child(1) > select:nth-child(2) > option:nth-child(4)").selected == true) {
-			document.querySelector("#content > form:nth-child(8) > table:nth-child(1) > tbody:nth-child(1) > tr:nth-child(3) > td:nth-child(1) > select:nth-child(2) > option:nth-child(3)").selected = true;
-		}
-	});	
+	var noc = document.querySelector("#content > form > table > tbody > tr:nth-child(3) > td > select:nth-child(7)");
+	if (noc.value != 2) {
+		noc.addEventListener("change", function(){
+			if (this.value == 2) {
+				document.querySelector("#content > form:nth-child(8) > table:nth-child(1) > tbody:nth-child(1) > tr:nth-child(3) > td:nth-child(1) > select:nth-child(3) > option:nth-child(2)").selected = true;
+				if (document.querySelector("#content > form:nth-child(8) > table:nth-child(1) > tbody:nth-child(1) > tr:nth-child(3) > td:nth-child(1) > select:nth-child(2) > option:nth-child(4)").selected == true) {
+					document.querySelector("#content > form:nth-child(8) > table:nth-child(1) > tbody:nth-child(1) > tr:nth-child(3) > td:nth-child(1) > select:nth-child(2) > option:nth-child(3)").selected = true;
+				}
+			}
+		});	
+	}
 }
 
 self.port.emit("getEscalationTimer", window.location.href)
