@@ -130,6 +130,7 @@ function initNotPublic() {
         });
         getEscalationTimer.port.once("timerRetrieved1", function (timer) {
           worker.port.emit("timerRetrieved", timer);
+          getEscalationTimer.destroy();
         });
       });
     }

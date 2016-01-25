@@ -1,16 +1,7 @@
-/*
-.resizableDiv{
-    border: 2px solid #666666;
-    width: 33%;
-    resize: both;
-    overflow: hidden;	
-}
-
-.resizableAnchor{
-	width: 100%;
-}
-*/
-
 .resizableImg{
 	width: 33%;
+}
+
+#content {
+	width: calc(100% - 17px) !important;
 }
