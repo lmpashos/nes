@@ -22,7 +22,7 @@ self.port.on("imgurl", function(imgurl) {
 		button.addEventListener('click', popup, false);
 	}
 
-})
+});
 
 
 function popup(e) {
@@ -115,7 +115,7 @@ function popup(e) {
 }
 
 function destroy(evt) {
-    var overlay = document.getElementById("overlay")
+    var overlay = document.getElementById("overlay");
     var span = document.getElementById(overlay.dataset.pointer);
     span.removeAttribute("id");
     document.body.removeChild(overlay);
@@ -124,3 +124,12 @@ function destroy(evt) {
     //self.port.removeListener("submitted2");
     self.port.emit("overlayClosed");
 }
+
+
+
+// fix cacti link
+
+document.querySelector("#rightNav > a:nth-child(2)").href = "http://mycacti.netcarrier.net/cacti/";
+self.port.on("cactiImgUrl", function(cactiImgUrl) {
+    document.querySelector("#rightNav > a:nth-child(2) > img:nth-child(1)").src = cactiImgUrl;
+});

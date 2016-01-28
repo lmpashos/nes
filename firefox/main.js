@@ -19,6 +19,11 @@ var companyName = require('sdk/simple-prefs').prefs['companyName'];
 var acdKicker = require('sdk/simple-prefs').prefs['acdKicker'];
 
 
+// intitialize asssets
+var imgurl = self.data.url("expand.png");
+var cactiImgUrl = self.data.url("top_cacti.png");
+
+
 // handles preference changes so the browser does not
 // have to be restarted to change effect
 require("sdk/simple-prefs").on("", onPrefChange);
@@ -106,8 +111,10 @@ function detachWorker(worker, workerArray) {
 
 // initializes script that handles unchecking the public checkbox when updating a ticket
 // and puts the ticket into "NOC" mode
+
 var notPublic;
 initNotPublic();
+
 function initNotPublic() {
   notPublic = require("sdk/page-mod").PageMod({
     include: ["http://tickets/tickets/viewticket.asp?id=*", "http://tickets.ncdomain.netcarrier.com/tickets/viewticket.asp?id=*"],
@@ -122,6 +129,7 @@ function initNotPublic() {
       worker.on('detach', function() {
         detachWorker(this, workers);
       });
+      worker.port.emit("cactiImgUrl", cactiImgUrl);
       worker.port.once("getEscalationTimer", function (link) {
         var getEscalationTimer = require("sdk/page-worker").Page({
           contentScriptFile: data.url("getEscalationTimer.js"),
@@ -179,7 +187,6 @@ function initReach() {
 
 
 // controller for the quick ticket view functionality
-var imgurl = self.data.url("expand.png");
 var ticketsPage = require("sdk/page-mod");
 ticketsPage.PageMod({
   include: ["http://tickets/tickets/view.asp", "http://tickets.ncdomain.netcarrier.com/tickets/view.asp"],
@@ -187,6 +194,7 @@ ticketsPage.PageMod({
   contentStyleFile: self.data.url("ticketsPage.css"),
   onAttach: function(worker) {
     worker.port.emit("imgurl", imgurl);
+    worker.port.emit("cactiImgUrl", cactiImgUrl);
     worker.port.on("grabTicket", function(ticket){
       var pageWorker = require("sdk/page-worker").Page({
         contentScriptFile: data.url("ticketBody.js"),

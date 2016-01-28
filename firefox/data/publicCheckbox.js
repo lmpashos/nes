@@ -45,11 +45,69 @@ function prepForNOC() {
 	}
 }
 
+
+
+// fix cacti link
+
+document.querySelector("#rightNav > a:nth-child(2)").href = "http://mycacti.netcarrier.net/cacti/";
+self.port.on("cactiImgUrl", function(cactiImgUrl) {
+	document.querySelector("#rightNav > a:nth-child(2) > img:nth-child(1)").src = cactiImgUrl;
+});
+
+
+
+// gets the escaltion timer for the ticket
+
 self.port.emit("getEscalationTimer", window.location.href)
 self.port.once("timerRetrieved", function (timer) {
 	document.querySelector("#content > table:nth-child(5) > tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(1)").innerHTML += "- Escalation Timer: " + timer;
 });
 
+
+
+// automonitor integration
+
+var automonitorButton = document.querySelector("#content > form:nth-child(8) > table:nth-child(1) > tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(1) > b:nth-child(1)")
+automonitorButton.addEventListener("click", function() {
+	var ip = "";
+	while (ip == "" || ip == "XXX.XXX.XXX.XXX") {
+		ip = prompt("Enter USABLE IP address to access the IAD.", "XXX.XXX.XXX.XXX");
+	}
+	if (ip == null) {
+		return;
+	}
+	var t1 = "";
+	while (t1 == "") {
+		t1 = prompt("Enter T1 port number. Separate by a space if multiple T1s.", "0/1");
+	}
+	if (t1 == null) {
+		return;
+	}
+	var hours = "";
+	var intervals;
+	while (hours =="") {
+		hours = prompt("Enter how long to monitor in hours.", "24");
+	}
+	if (hours == null) {
+		return;
+	}
+	else if (! isNormalInteger(hours)) {
+		alert("Invalid number of hours, you clown!")
+		return;
+	}
+	intervals = Math.ceil(hours / 4);
+	var monitorPostArea = document.querySelector("#content > form:nth-child(8) > table:nth-child(1) > tbody:nth-child(1) > tr:nth-child(2) > td:nth-child(1) > textarea:nth-child(1)");
+	monitorPostArea.value = "@automonitor\n" + ip + "\n" + t1 + "\n" + "0/" + intervals + "\n" + "@automonitor";
+	document.querySelector("#subject > option:nth-child(7)").selected = true;
+	document.querySelector("#content > form:nth-child(8) > table:nth-child(1) > tbody:nth-child(1) > tr:nth-child(3) > td:nth-child(1) > select:nth-child(3) > option:nth-child(5)").selected = true;
+	document.querySelector("#content > form:nth-child(8) > table:nth-child(1) > tbody:nth-child(1) > tr:nth-child(4) > td:nth-child(1) > input:nth-child(2)").checked = false;
+	document.querySelector("#content > form:nth-child(8) > table:nth-child(1) > tbody:nth-child(1) > tr:nth-child(4) > td:nth-child(1) > input:nth-child(1)").click();
+});
+
+function isNormalInteger(str) {
+    var n = ~~Number(str);
+    return String(n) === str && n > 0;
+}
 
 
 
