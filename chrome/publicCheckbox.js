@@ -109,6 +109,11 @@ automonitorButton.addEventListener("click", function() {
 	document.querySelector("#content > form:nth-child(8) > table:nth-child(1) > tbody:nth-child(1) > tr:nth-child(4) > td:nth-child(1) > input:nth-child(1)").click();
 });
 
+function isNormalInteger(str) {
+    var n = ~~Number(str);
+    return String(n) === str && n > 0;
+}
+
 
 // find all image links in ticket
 var events = document.querySelectorAll("#content > table:nth-child(5) > tbody:nth-child(1) > tr > td:nth-child(2)");
