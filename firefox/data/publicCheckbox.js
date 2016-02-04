@@ -70,7 +70,7 @@ self.port.once("timerRetrieved", function (timer) {
 var automonitorButton = document.querySelector("#content > form:nth-child(8) > table:nth-child(1) > tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(1) > b:nth-child(1)")
 automonitorButton.addEventListener("click", function() {
 	var ip = "";
-	while (ip == "" || ip == "XXX.XXX.XXX.XXX") {
+	while (ip == "" || ! ValidateIPaddress(ip)) {
 		ip = prompt("Enter USABLE IP address to access the IAD.", "XXX.XXX.XXX.XXX");
 	}
 	if (ip == null) {
@@ -109,6 +109,16 @@ function isNormalInteger(str) {
     return String(n) === str && n > 0;
 }
 
+function ValidateIPaddress(ipaddress) {
+	if (ipaddress == null) {
+		return true
+	}
+	else if (/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(ipaddress)) {
+		return (true)  
+	}  
+	alert("You have entered an invalid IP address!")  
+	return (false)  
+}  
 
 
 // finds image links posted in the ticket
