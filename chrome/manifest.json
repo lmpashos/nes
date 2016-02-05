@@ -71,7 +71,10 @@
         "storage"
     ],
     "web_accessible_resources": [
-        "top_cacti.png"
+        "top_cacti.png",
+        "expand.png",
+        "collapse.png"
+
     ],
     "options_ui": {
         "page": "options.html",

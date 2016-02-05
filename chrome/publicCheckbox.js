@@ -75,7 +75,7 @@ chrome.extension.sendRequest({greeting:"getEscalationTimer", ticketURL:window.lo
 var automonitorButton = document.querySelector("#content > form:nth-child(8) > table:nth-child(1) > tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(1) > b:nth-child(1)")
 automonitorButton.addEventListener("click", function() {
 	var ip = "";
-	while (ip == "" || ip == "XXX.XXX.XXX.XXX") {
+	while (ip == "" || ! ValidateIPaddress(ip)) {
 		ip = prompt("Enter USABLE IP address to access the IAD.", "XXX.XXX.XXX.XXX");
 	}
 	if (ip == null) {
@@ -104,6 +104,7 @@ automonitorButton.addEventListener("click", function() {
 	var monitorPostArea = document.querySelector("#content > form:nth-child(8) > table:nth-child(1) > tbody:nth-child(1) > tr:nth-child(2) > td:nth-child(1) > textarea:nth-child(1)");
 	monitorPostArea.value = "@automonitor\n" + ip + "\n" + t1 + "\n" + "0/" + intervals + "\n" + "@automonitor";
 	document.querySelector("#subject > option:nth-child(7)").selected = true;
+	document.querySelector("#content > form:nth-child(8) > table:nth-child(1) > tbody:nth-child(1) > tr:nth-child(3) > td:nth-child(1) > select:nth-child(2) > option:nth-child(3)").selected = true;
 	document.querySelector("#content > form:nth-child(8) > table:nth-child(1) > tbody:nth-child(1) > tr:nth-child(3) > td:nth-child(1) > select:nth-child(3) > option:nth-child(5)").selected = true;
 	document.querySelector("#content > form:nth-child(8) > table:nth-child(1) > tbody:nth-child(1) > tr:nth-child(4) > td:nth-child(1) > input:nth-child(2)").checked = false;
 	document.querySelector("#content > form:nth-child(8) > table:nth-child(1) > tbody:nth-child(1) > tr:nth-child(4) > td:nth-child(1) > input:nth-child(1)").click();
@@ -113,6 +114,18 @@ function isNormalInteger(str) {
     var n = ~~Number(str);
     return String(n) === str && n > 0;
 }
+
+function ValidateIPaddress(ipaddress) {
+	if (ipaddress == null) {
+		return true
+	}
+	else if (/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(ipaddress)) {
+		return (true)  
+	}  
+	alert("You have entered an invalid IP address!")  
+	return (false)  
+}  
+
 
 
 // find all image links in ticket
@@ -130,22 +143,46 @@ for (var x = 0; x < events.length; x++) {
 	}
 }
 
-// set image links in image tags for in line viewing
+// sets the posted image link in image tags for in line viewing
+var expandImgUrl = chrome.extension.getURL("expand.png");
+var collapseImgUrl = chrome.extension.getURL("collapse.png");
 for (var x = 0; x < links.length; x++) {
-	//var div = document.createElement("div");
+	var expandImg = document.createElement("img");
+	expandImg.src = chrome.extension.getURL("expand.png");
+	expandImg.title = "Click to Expand Image";
+	handleExpand(expandImg);
 	var anchor = document.createElement("a");
 	anchor.href = links[x].href;
 	var img = document.createElement("img");
 	img.src = links[x].href;
-	//div.appendChild(anchor);
 	anchor.appendChild(img);
-	//div.setAttribute("class", "resizableDiv");
 	anchor.setAttribute("class", "resizableAnchor");
 	img.setAttribute("class", "resizableImg");
-
+	expandImg.setAttribute("class", "expandImg");
+	links[x].parentNode.insertBefore(expandImg, links[x]);
 	links[x].parentNode.insertBefore(anchor, links[x]);
 	links[x].parentNode.removeChild(links[x]);
+	handleExpand(expandImg, img);
 }
+
+function handleExpand(expandImg, img) {
+	expandImg.addEventListener("click", function expand () {
+		if (img.style.display != "table") {
+			img.style.display = "table";
+			expandImg.src = chrome.extension.getURL("collapse.png");
+			expandImg.title = "Click to Collapse Image";
+		}
+		else {
+			img.style.display = "none";
+			expandImg.src = chrome.extension.getURL("expand.png");
+			expandImg.title = "Click to Expand Image";
+		}
+	});
+}
+
+
+
+// long chunk of code that makes the images resizable
 
 
 var imageData = Array();

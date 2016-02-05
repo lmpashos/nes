@@ -20,7 +20,8 @@ var acdKicker = require('sdk/simple-prefs').prefs['acdKicker'];
 
 
 // intitialize asssets
-var imgurl = self.data.url("expand.png");
+var expandImgUrl = self.data.url("expand.png");
+var collapseImgUrl = self.data.url("collapse.png");
 var cactiImgUrl = self.data.url("top_cacti.png");
 
 
@@ -122,14 +123,16 @@ function initNotPublic() {
     contentStyleFile: self.data.url("publicCheckbox.css"),
     contentScriptOptions: {
       alwaysPrivate: alwaysPrivate,
-      prepNOC: prepNOC
+      prepNOC: prepNOC,
+      expandImgUrl: expandImgUrl,
+      collapseImgUrl: collapseImgUrl,
+      cactiImgUrl: cactiImgUrl
     },
     onAttach: function(worker) {
       workers.push(worker);
       worker.on('detach', function() {
         detachWorker(this, workers);
       });
-      worker.port.emit("cactiImgUrl", cactiImgUrl);
       worker.port.once("getEscalationTimer", function (link) {
         var getEscalationTimer = require("sdk/page-worker").Page({
           contentScriptFile: data.url("getEscalationTimer.js"),
@@ -192,9 +195,11 @@ ticketsPage.PageMod({
   include: ["http://tickets/tickets/view.asp", "http://tickets.ncdomain.netcarrier.com/tickets/view.asp"],
   contentScriptFile: data.url("ticketsPage.js"),
   contentStyleFile: self.data.url("ticketsPage.css"),
+  contentScriptOptions : {
+    expandImgUrl: expandImgUrl,
+    cactiImgUrl: cactiImgUrl
+  },
   onAttach: function(worker) {
-    worker.port.emit("imgurl", imgurl);
-    worker.port.emit("cactiImgUrl", cactiImgUrl);
     worker.port.on("grabTicket", function(ticket){
       var pageWorker = require("sdk/page-worker").Page({
         contentScriptFile: data.url("ticketBody.js"),

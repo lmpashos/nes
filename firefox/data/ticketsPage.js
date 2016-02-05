@@ -1,28 +1,25 @@
 var clicked;
 
-self.port.on("imgurl", function(imgurl) {
-	function insertAfter(newNode, referenceNode) {
-   		referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
-	}
+function insertAfter(newNode, referenceNode) {
+		referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+}
 
-	var tickets = document.querySelectorAll("tr td:first-child a:first-child");
+var tickets = document.querySelectorAll("tr td:first-child a:first-child");
 
-	for (var i = 0; i < tickets.length - 1; i++) {
-		var space = document.createElement("span");
-		space.innerHTML = "&nbsp;&nbsp;";
-		insertAfter(space, tickets[i]);
-        var wrapper = document.createElement("a");
-        wrapper.href = "javascript:void(0)";
-		var button = document.createElement("img");
-		button.src = imgurl;
-		button.classList.add("quick");
-		button.className = button.className + " " + tickets[i].innerHTML.replace(/\D/g,'');
-		wrapper.appendChild(button);
-        insertAfter(wrapper, space);
-		button.addEventListener('click', popup, false);
-	}
-
-});
+for (var i = 0; i < tickets.length - 1; i++) {
+	var space = document.createElement("span");
+	space.innerHTML = "&nbsp;&nbsp;";
+	insertAfter(space, tickets[i]);
+    var wrapper = document.createElement("a");
+    wrapper.href = "javascript:void(0)";
+	var button = document.createElement("img");
+	button.src = self.options.expandImgUrl;
+	button.classList.add("quick");
+	button.className = button.className + " " + tickets[i].innerHTML.replace(/\D/g,'');
+	wrapper.appendChild(button);
+    insertAfter(wrapper, space);
+	button.addEventListener('click', popup, false);
+}
 
 
 function popup(e) {
@@ -130,6 +127,4 @@ function destroy(evt) {
 // fix cacti link
 
 document.querySelector("#rightNav > a:nth-child(2)").href = "http://mycacti.netcarrier.net/cacti/";
-self.port.on("cactiImgUrl", function(cactiImgUrl) {
-    document.querySelector("#rightNav > a:nth-child(2) > img:nth-child(1)").src = cactiImgUrl;
-});
+document.querySelector("#rightNav > a:nth-child(2) > img:nth-child(1)").src = self.options.cactiImgUrl;

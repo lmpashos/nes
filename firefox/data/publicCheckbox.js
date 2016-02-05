@@ -5,7 +5,6 @@ checkbox in a ticket after an update type has been selected
 
 */
 
-
 if (self.options.alwaysPrivate == true) {
 	//alert("private enabled");
 	makePrivate();
@@ -50,9 +49,7 @@ function prepForNOC() {
 // fix cacti link
 
 document.querySelector("#rightNav > a:nth-child(2)").href = "http://mycacti.netcarrier.net/cacti/";
-self.port.on("cactiImgUrl", function(cactiImgUrl) {
-	document.querySelector("#rightNav > a:nth-child(2) > img:nth-child(1)").src = cactiImgUrl;
-});
+document.querySelector("#rightNav > a:nth-child(2) > img:nth-child(1)").src = self.options.cactiImgUrl;
 
 
 
@@ -99,6 +96,7 @@ automonitorButton.addEventListener("click", function() {
 	var monitorPostArea = document.querySelector("#content > form:nth-child(8) > table:nth-child(1) > tbody:nth-child(1) > tr:nth-child(2) > td:nth-child(1) > textarea:nth-child(1)");
 	monitorPostArea.value = "@automonitor\n" + ip + "\n" + t1 + "\n" + "0/" + intervals + "\n" + "@automonitor";
 	document.querySelector("#subject > option:nth-child(7)").selected = true;
+	document.querySelector("#content > form:nth-child(8) > table:nth-child(1) > tbody:nth-child(1) > tr:nth-child(3) > td:nth-child(1) > select:nth-child(2) > option:nth-child(3)").selected = true;
 	document.querySelector("#content > form:nth-child(8) > table:nth-child(1) > tbody:nth-child(1) > tr:nth-child(3) > td:nth-child(1) > select:nth-child(3) > option:nth-child(5)").selected = true;
 	document.querySelector("#content > form:nth-child(8) > table:nth-child(1) > tbody:nth-child(1) > tr:nth-child(4) > td:nth-child(1) > input:nth-child(2)").checked = false;
 	document.querySelector("#content > form:nth-child(8) > table:nth-child(1) > tbody:nth-child(1) > tr:nth-child(4) > td:nth-child(1) > input:nth-child(1)").click();
@@ -140,6 +138,10 @@ for (var x = 0; x < events.length; x++) {
 // sets the posted image link in image tags for in line viewing
 
 for (var x = 0; x < links.length; x++) {
+	var expandImg = document.createElement("img");
+	expandImg.src = self.options.expandImgUrl;
+	expandImg.title = "Click to Expand Image";
+	handleExpand(expandImg);
 	var anchor = document.createElement("a");
 	anchor.href = links[x].href;
 	var img = document.createElement("img");
@@ -147,8 +149,26 @@ for (var x = 0; x < links.length; x++) {
 	anchor.appendChild(img);
 	anchor.setAttribute("class", "resizableAnchor");
 	img.setAttribute("class", "resizableImg");
+	expandImg.setAttribute("class", "expandImg");
+	links[x].parentNode.insertBefore(expandImg, links[x]);
 	links[x].parentNode.insertBefore(anchor, links[x]);
 	links[x].parentNode.removeChild(links[x]);
+	handleExpand(expandImg, img);
+}
+
+function handleExpand(expandImg, img) {
+	expandImg.addEventListener("click", function expand () {
+		if (img.style.display != "table") {
+			img.style.display = "table";
+			expandImg.src = self.options.collapseImgUrl;
+			expandImg.title = "Click to Collapse Image";
+		}
+		else {
+			img.style.display = "none";
+			expandImg.src = self.options.expandImgUrl;
+			expandImg.title = "Click to Expand Image";
+		}
+	});
 }
 
 
