@@ -1,5 +1,6 @@
 .resizableImg{
-	width: 33%;
+	max-width: 33%;
+	min-width: 1%;
 }
 
 #content {
