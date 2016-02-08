@@ -20,9 +20,9 @@ var acdKicker = require('sdk/simple-prefs').prefs['acdKicker'];
 
 
 // intitialize asssets
-var expandImgUrl = self.data.url("expand.png");
-var collapseImgUrl = self.data.url("collapse.png");
-var cactiImgUrl = self.data.url("top_cacti.png");
+var expandImgUrl = self.data.url("images/expand.png");
+var collapseImgUrl = self.data.url("images/collapse.png");
+var cactiImgUrl = self.data.url("images/top_cacti.png");
 
 
 // handles preference changes so the browser does not
@@ -57,9 +57,9 @@ var button = ToggleButton({
   id: "NES",
   label: "NES",
   icon: {
-    "16": "./icon-16.png",
-    "32": "./icon-32.png",
-    "64": "./icon-64.png"
+    "16": "./images/icon-16.png",
+    "32": "./images/icon-32.png",
+    "64": "./images/icon-64.png"
   },
   onChange: handleChange
 });
@@ -67,8 +67,8 @@ var button = ToggleButton({
 
 // panel to be displayed when clicked
 var panel = require("sdk/panel").Panel({
-  contentURL: data.url("panel.html"),
-  contentScriptFile: [data.url("panel.js"), data.url("sorttable.js")],
+  contentURL: data.url("html/panel.html"),
+  contentScriptFile: [data.url("js/panel.js"), data.url("js/sorttable.js")],
   height: 550,
   width: 600,
   onHide: handleHide
@@ -119,8 +119,8 @@ initNotPublic();
 function initNotPublic() {
   notPublic = require("sdk/page-mod").PageMod({
     include: ["http://tickets/tickets/viewticket.asp?id=*", "http://tickets.ncdomain.netcarrier.com/tickets/viewticket.asp?id=*"],
-    contentScriptFile: data.url("publicCheckbox.js"),
-    contentStyleFile: self.data.url("publicCheckbox.css"),
+    contentScriptFile: data.url("js/ticket.js"),
+    contentStyleFile: self.data.url("css/ticket.css"),
     contentScriptOptions: {
       alwaysPrivate: alwaysPrivate,
       prepNOC: prepNOC,
@@ -135,7 +135,7 @@ function initNotPublic() {
       });
       worker.port.once("getEscalationTimer", function (link) {
         var getEscalationTimer = require("sdk/page-worker").Page({
-          contentScriptFile: data.url("getEscalationTimer.js"),
+          contentScriptFile: data.url("js/getEscalationTimer.js"),
           contentScriptOptions: {ticketLink: link},
           contentURL: "http://tickets/tickets/view.asp"
         });
@@ -155,7 +155,7 @@ initTicketCreateDefault();
 function initTicketCreateDefault() {
   ticketCreateDefault = require("sdk/page-mod").PageMod({
     include: ["http://tickets/tickets/create.asp", "http://tickets.ncdomain.netcarrier.com/tickets/create.asp"],
-    contentScriptFile: data.url("companyName.js"),
+    contentScriptFile: data.url("js/createTicket.js"),
     contentScriptOptions: {
       companyName: companyName
     },
@@ -175,7 +175,7 @@ initReach();
 function initReach() {
   reach = require("sdk/page-mod").PageMod({
     include: ["https://pbx1.ncpbxnccorp.com/reach/d*", "http://pbx1.ncpbxnccorp.com/reach/d*"],
-    contentScriptFile: self.data.url("reach.js"),
+    contentScriptFile: self.data.url("js/reach.js"),
     contentScriptOptions: {
       releaseKicker: acdKicker
     },
@@ -190,11 +190,11 @@ function initReach() {
 
 
 // controller for the quick ticket view functionality
-var ticketsPage = require("sdk/page-mod");
-ticketsPage.PageMod({
+var viewTickets = require("sdk/page-mod");
+viewTickets.PageMod({
   include: ["http://tickets/tickets/view.asp", "http://tickets.ncdomain.netcarrier.com/tickets/view.asp"],
-  contentScriptFile: data.url("ticketsPage.js"),
-  contentStyleFile: self.data.url("ticketsPage.css"),
+  contentScriptFile: data.url("js/viewTickets.js"),
+  contentStyleFile: self.data.url("css/viewTickets.css"),
   contentScriptOptions : {
     expandImgUrl: expandImgUrl,
     cactiImgUrl: cactiImgUrl
@@ -202,7 +202,7 @@ ticketsPage.PageMod({
   onAttach: function(worker) {
     worker.port.on("grabTicket", function(ticket){
       var pageWorker = require("sdk/page-worker").Page({
-        contentScriptFile: data.url("ticketBody.js"),
+        contentScriptFile: data.url("js/getTicketInfo.js"),
         contentURL: "http://tickets/tickets/viewticket.asp?id=" + ticket
       });
       pageWorker.port.on("returnTicket", function (cust, tic, desc, lastHead, lastUpdate, newUpdate) {
@@ -239,10 +239,10 @@ function openTickets() {
 }
 
 
-// attatches tickets.js to tickets tab to count up the tickets
+// attatches getTicketNumbers.js to tickets tab to count up the tickets
 function countTickets(tab) {
   worker = tab.attach({
-    contentScriptFile: data.url("tickets.js")
+    contentScriptFile: data.url("js/getTicketNumbers.js")
   });
 
   worker.port.on("returnTicketCount", function (html,numTickets){
@@ -258,7 +258,7 @@ function countTickets(tab) {
 /*
 function login(tab) {
   worker = tab.attach({
-    contentScriptFile: data.url("login.js"),
+    contentScriptFile: data.url("loginOldACD.js"),
     contentScriptOptions: {
       username: require('sdk/simple-prefs').prefs['username'],
       password: require('sdk/simple-prefs').prefs['password'],
@@ -292,7 +292,7 @@ var userName;
 panel.port.on("getMyTickets", function () {
   var pageWorker = require("sdk/page-worker").Page({
     contentURL: "http://tickets/",
-    contentScriptFile: data.url("getUser.js")
+    contentScriptFile: data.url("js/getUser.js")
   });
   pageWorker.port.once("userGot", function (name) {
     pageWorker.destroy();
@@ -306,7 +306,7 @@ panel.port.on("getMyTickets", function () {
 function openMyTickets() {
   var pageWorker = require("sdk/page-worker").Page({
     contentURL: "http://tickets/tickets/view.asp",
-    contentScriptFile: data.url("myTickets.js"),
+    contentScriptFile: data.url("js/getUsersTickets.js"),
     contentScriptOptions: {"name": userName}
   });
   pageWorker.port.once("linksRetrieved", function (links){
@@ -325,7 +325,7 @@ function openMyTickets() {
 panel.port.on("openHisTickets", function (name) {
   var pageWorker = require("sdk/page-worker").Page({
     contentURL: "http://tickets/tickets/view.asp",
-    contentScriptFile: data.url("myTickets.js"),
+    contentScriptFile: data.url("js/getUsersTickets.js"),
     contentScriptOptions: {"name": name}
   });
   pageWorker.port.once("linksRetrieved", function (links){
@@ -345,7 +345,7 @@ panel.port.on("openHisTickets", function (name) {
 panel.port.on("seanSearch", function () {
   var pageWorker = require("sdk/page-worker").Page({
     contentURL: "http://tickets/",
-    contentScriptFile: data.url("getUser.js")
+    contentScriptFile: data.url("js/getUser.js")
   });
   pageWorker.port.once("userGot", function (name) {
     pageWorker.destroy();
@@ -365,7 +365,7 @@ function seanSearchCaller() {
 
 function seanSearch(tab) {
   searchSearchWorker = tab.attach({
-    contentScriptFile: data.url("seanSearch.js"),
+    contentScriptFile: data.url("js/seanSearch.js"),
     contentScriptOptions: {"name": userName}
   });
   searchSearchWorker.port.on("complete", function() {

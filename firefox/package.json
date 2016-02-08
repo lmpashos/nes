@@ -3,7 +3,7 @@
   "name": "nes",
   "version": "0.8.17",
   "id": "nes1@nc",
-  "icon": "resource://nes1-at-nc/data/icon-64.png",
+  "icon": "resource://nes1-at-nc/data/images/icon-64.png",
   "description": "Enhancements and Fixes",
   "main": "main.js",
   "author": "anon",
