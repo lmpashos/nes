@@ -141,7 +141,6 @@ for (var x = 0; x < links.length; x++) {
 	var expandImg = document.createElement("img");
 	expandImg.src = self.options.expandImgUrl;
 	expandImg.title = "Click to Expand Image";
-	handleExpand(expandImg);
 	var anchor = document.createElement("a");
 	anchor.href = links[x].href;
 	var img = document.createElement("img");
@@ -158,8 +157,8 @@ for (var x = 0; x < links.length; x++) {
 
 function handleExpand(expandImg, img) {
 	expandImg.addEventListener("click", function expand () {
-		if (img.style.display != "table") {
-			img.style.display = "table";
+		if (img.style.display != "block") {
+			img.style.display = "block";
 			expandImg.src = self.options.collapseImgUrl;
 			expandImg.title = "Click to Collapse Image";
 		}

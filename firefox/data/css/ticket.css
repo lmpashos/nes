@@ -1,12 +1,16 @@
+.expandImg {
+	margin-bottom: 5px;
+	cursor: pointer;
+	float: left;
+	clear: both;
+}
+
 .resizableImg {
 	max-width: 33%;
 	min-width: 1%;
 	display: none;
-}
-
-.expandImg {
-	margin-bottom: 5px;
-	cursor: pointer;
+    float: left;
+    clear: both;
 }
 
 #content {

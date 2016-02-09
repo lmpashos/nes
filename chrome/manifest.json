@@ -1,22 +1,22 @@
 {
     "manifest_version": 2,
     "name": "NES",
-    "version": "0.5.11",
+    "version": "0.5.12",
     "author": "anon",
     "description": "Enhancements and Fixes",
     "icons": {
-        "16": "./icon-16.png",
-        "32": "./icon-32.png",
-        "64": "./icon-64.png"
+        "16": "./images/icon-16.png",
+        "32": "./images/icon-32.png",
+        "64": "./images/icon-64.png"
     },
     "browser_action": {
         "default_icon": {
-            "16": "./icon-16.png",
-            "32": "./icon-32.png",
-            "64": "./icon-64.png"
+            "16": "./images/icon-16.png",
+            "32": "./images/icon-32.png",
+            "64": "./images/icon-64.png"
         },
         "default_title": "NES",
-        "default_popup": "panel.html"
+        "default_popup": "html/panel.html"
     },
     "content_scripts": [
         {
@@ -25,10 +25,10 @@
                 "http://tickets.ncdomain.netcarrier.com/tickets/viewticket.asp?id=*"
             ],
             "js": [
-                "publicCheckbox.js"
+                "js/ticket.js"
             ],
             "css": [
-                "publicCheckbox.css"
+                "css/ticket.css"
             ]
         },
         {
@@ -37,7 +37,7 @@
                 "http://tickets.ncdomain.netcarrier.com/tickets/create.asp"
             ],
             "js": [
-                "companyName.js"
+                "js/createTicket.js"
             ]
         },
         {
@@ -46,7 +46,7 @@
                 "http://pbx1.ncpbxnccorp.com/reach/d*"
             ],
             "js": [
-                "reach.js"
+                "js/reach.js"
             ]
         },
         {
@@ -55,12 +55,12 @@
                 "http://tickets.ncdomain.netcarrier.com/tickets/view.asp"
             ],
             "js": [
-                "ticketsview.js"
+                "js/viewTickets.js"
             ]
         }
     ],
     "background": {
-        "scripts": ["background.js"]
+        "scripts": ["js/background.js"]
     },
     "permissions": [
         "tabs",
@@ -71,13 +71,13 @@
         "storage"
     ],
     "web_accessible_resources": [
-        "top_cacti.png",
-        "expand.png",
-        "collapse.png"
+        "images/top_cacti.png",
+        "images/expand.png",
+        "images/collapse.png"
 
     ],
     "options_ui": {
-        "page": "options.html",
+        "page": "html/options.html",
         "chrome_style": true
     }
 }

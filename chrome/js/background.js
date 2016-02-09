@@ -21,7 +21,7 @@ chrome.extension.onRequest.addListener(
 
 function getMyTickets() {
 	chrome.tabs.create({url: "http://tickets/", active: false}, function (tab) {
-	 	chrome.tabs.executeScript(tab.id, {file: "getUser.js"})
+	 	chrome.tabs.executeScript(tab.id, {file: "js/getUser.js"})
 		chrome.extension.onRequest.addListener(
 		    function update(request, sender) {
 		    	if (request.greeting == "userGotten") {
@@ -36,7 +36,7 @@ function getMyTickets() {
 
 function retrieveLinks(name) {
 	chrome.tabs.create({url: "http://tickets/tickets/view.asp", active: false}, function (tab) {
-	 	chrome.tabs.executeScript(tab.id, {file: "myTickets.js"}, function() {
+	 	chrome.tabs.executeScript(tab.id, {file: "js/getUsersTickets.js"}, function() {
 	 		chrome.tabs.sendRequest(tab.id, {greeting: "passingName", name: name});
 	 	});
 		chrome.extension.onRequest.addListener(
@@ -63,7 +63,7 @@ chrome.extension.onRequest.addListener(
 
 function openHisTickets(name) {
 	chrome.tabs.create({url: "http://tickets/tickets/view.asp", active: false}, function (tab) {
-	 	chrome.tabs.executeScript(tab.id, {file: "myTickets.js"}, function() {
+	 	chrome.tabs.executeScript(tab.id, {file: "js/getUsersTickets.js"}, function() {
 	 		chrome.tabs.sendRequest(tab.id, {greeting: "passingName", name: name});
 	 	});
 		chrome.extension.onRequest.addListener(
@@ -124,7 +124,7 @@ chrome.extension.onRequest.addListener(
 
 function seanSearchNameGetter() {
 	chrome.tabs.create({url: "http://tickets/", active: false}, function (tab) {
-	 	chrome.tabs.executeScript(tab.id, {file: "getUser.js"})
+	 	chrome.tabs.executeScript(tab.id, {file: "js/getUser.js"})
 		chrome.extension.onRequest.addListener(
 		    function update(request, sender) {
 		    	if (request.greeting == "userGotten") {
@@ -139,7 +139,7 @@ function seanSearchNameGetter() {
 
 function seanSearch(name) {
 	chrome.tabs.create({url: "http://tickets/tickets/search.asp", active: true}, function (tab) {
-	 	chrome.tabs.executeScript(tab.id, {file: "seanSearch.js"}, function() {
+	 	chrome.tabs.executeScript(tab.id, {file: "js/seanSearch.js"}, function() {
 	 		chrome.tabs.sendRequest(tab.id, {greeting: "seanSearchName", name: name});
 	 	});
 		chrome.extension.onRequest.addListener(

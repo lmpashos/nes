@@ -7,7 +7,7 @@ This script handles interactivity for the panel.
 /*
 
 
-// listens for ticket info relayed from main that originated in tickets.js
+// listens for ticket info relayed from main that originated in getTicketNumbers.js
 self.port.on("updatePanel", function (text,numTickets){
 	//console.log("!!!!!!")
 	document.getElementById("ticketCount").innerHTML = text;
@@ -99,7 +99,7 @@ function getSavedData(){
 function getNewData(){
 	var table = document.getElementsByTagName("table");
 	chrome.tabs.create({url: "http://tickets/tickets/view.asp", active: false}, function (tab) {
-	 	chrome.tabs.executeScript(tab.id, {file: "tickets.js"})
+	 	chrome.tabs.executeScript(tab.id, {file: "js/getTicketNumbers.js"})
 		chrome.extension.onRequest.addListener(
 		    function update(request, sender) {
 		    	if (request.greeting = "tableRetrieved") {

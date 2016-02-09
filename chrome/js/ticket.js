@@ -57,7 +57,7 @@ function prepForNOC() {
 // fix cacti link
 
 document.querySelector("#rightNav > a:nth-child(2)").href = "http://mycacti.netcarrier.net/cacti/";
-document.querySelector("#rightNav > a:nth-child(2) > img:nth-child(1)").src = chrome.extension.getURL("top_cacti.png");
+document.querySelector("#rightNav > a:nth-child(2) > img:nth-child(1)").src = chrome.extension.getURL("../images/top_cacti.png");
 
 
 
@@ -144,13 +144,11 @@ for (var x = 0; x < events.length; x++) {
 }
 
 // sets the posted image link in image tags for in line viewing
-var expandImgUrl = chrome.extension.getURL("expand.png");
-var collapseImgUrl = chrome.extension.getURL("collapse.png");
+
 for (var x = 0; x < links.length; x++) {
 	var expandImg = document.createElement("img");
-	expandImg.src = chrome.extension.getURL("expand.png");
+	expandImg.src = chrome.extension.getURL("images/expand.png");
 	expandImg.title = "Click to Expand Image";
-	handleExpand(expandImg);
 	var anchor = document.createElement("a");
 	anchor.href = links[x].href;
 	var img = document.createElement("img");
@@ -167,14 +165,14 @@ for (var x = 0; x < links.length; x++) {
 
 function handleExpand(expandImg, img) {
 	expandImg.addEventListener("click", function expand () {
-		if (img.style.display != "table") {
-			img.style.display = "table";
-			expandImg.src = chrome.extension.getURL("collapse.png");
+		if (img.style.display != "block") {
+			img.style.display = "block";
+			expandImg.src = chrome.extension.getURL("images/collapse.png");
 			expandImg.title = "Click to Collapse Image";
 		}
 		else {
 			img.style.display = "none";
-			expandImg.src = chrome.extension.getURL("expand.png");
+			expandImg.src = chrome.extension.getURL("images/expand.png");
 			expandImg.title = "Click to Expand Image";
 		}
 	});
