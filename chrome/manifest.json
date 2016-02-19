@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "NES",
-    "version": "0.5.12",
+    "version": "0.5.13",
     "author": "anon",
     "description": "Enhancements and Fixes",
     "icons": {
